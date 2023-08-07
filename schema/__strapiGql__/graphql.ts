@@ -621,6 +621,7 @@ export type Query = {
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
   product?: Maybe<ProductEntityResponse>;
+  productBySlug: Product;
   products?: Maybe<ProductEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
@@ -662,6 +663,11 @@ export type QueryI18NLocalesArgs = {
 
 export type QueryProductArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryProductBySlugArgs = {
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 

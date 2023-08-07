@@ -22,3 +22,22 @@ export const GET_PRODUCTS_LIST = gql(/* GraphQL */ `query {
 		}
 	}
 }`)
+
+export const GET_PRODUCT_BY_ID = gql(`query getProductByID($slug: String!) {
+	productBySlug(slug: $slug) {
+		Name
+		Description
+		Name
+		Price
+		Exerpt
+		Gallery {
+			data {
+				attributes {
+					url
+					formats
+					alternativeText
+				}
+			}
+		}
+	}
+}`)
