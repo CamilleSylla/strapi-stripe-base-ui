@@ -1,5 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { counterSlice } from './cartSlice'
+import { CartStore, counterSlice } from './cartSlice'
+
+export interface ReduxStore {
+    cart : CartStore
+}
 
 export default configureStore({
     reducer: {

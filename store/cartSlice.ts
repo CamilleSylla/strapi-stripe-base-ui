@@ -14,7 +14,6 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, actions) => {
-        
       state.items = [...state.items, actions.payload]
     }
   }

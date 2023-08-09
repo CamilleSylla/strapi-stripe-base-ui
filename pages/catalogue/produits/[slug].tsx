@@ -13,7 +13,7 @@ export default function ProductPage({ product }: { product: Product }) {
         <div className="w-full">
             <div className=" flex w-full px-56 gap-10">
                 <Gallery images={product.Gallery as ProductGallery} />
-                <ProductInfos product={product}/>
+                <ProductInfos product={product} />
             </div>
         </div>
     )
@@ -21,14 +21,14 @@ export default function ProductPage({ product }: { product: Product }) {
 
 const ProductInfos = ({ product }: { product: Product }) => {
     const dispatch = useDispatch()
-    const { generateUUID} = useUUID()
+    const { generateUUID } = useUUID()
 
     return (
         <div className="flex-1">
             <h1 className=" font-bold text-xl text-gray-700">{product.Name}</h1>
-            <span className="block">{(product.Price * 100)/100}€</span>
+            <span className="block">{(product.Price * 100) / 100}€</span>
             <p>{product.Exerpt}</p>
-            <button onClick={() => dispatch(addToCart({slug: product.Slug, uuid: generateUUID()}))}>Add to cart</button>
+            <button onClick={() => dispatch(addToCart({ slug: product.Slug, uuid: generateUUID() }))}>Add to cart</button>
         </div>
     )
 }
