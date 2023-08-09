@@ -29,6 +29,7 @@ export const GET_PRODUCT_BY_ID = gql(`query getProductByID($slug: String!) {
 		Description
 		Name
 		Price
+		Slug
 		Exerpt
 		Gallery {
 			data {
