@@ -1,9 +1,12 @@
 import strapiGqlClient from "@/apollo-client"
 import StrapiImage from "@/components/StrapiImage";
+import { useUUID } from "@/composable/useUUID";
 import { GET_PRODUCT_BY_ID } from "@/queries/products"
 import { UploadFile } from "@/schema/__strapiGql__/graphql";
+import { addToCart } from "@/store/cartSlice";
 import { Product, ProductGallery } from "@/types/gql"
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function ProductPage({ product }: { product: Product }) {
     return (
@@ -17,11 +20,15 @@ export default function ProductPage({ product }: { product: Product }) {
 }
 
 const ProductInfos = ({ product }: { product: Product }) => {
+    const dispatch = useDispatch()
+    const { generateUUID} = useUUID()
+
     return (
         <div className="flex-1">
             <h1 className=" font-bold text-xl text-gray-700">{product.Name}</h1>
             <span className="block">{(product.Price * 100)/100}€</span>
             <p>{product.Exerpt}</p>
+            <button onClick={() => dispatch(addToCart({slug: product.Slug, uuid: generateUUID()}))}>Add to cart</button>
         </div>
     )
 }
