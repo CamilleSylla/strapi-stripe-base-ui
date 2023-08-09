@@ -9,12 +9,12 @@
     "lint": "next lint",
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w"
-    
   },
   "dependencies": {
     "@apollo/client": "^3.7.17",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/client-preset": "^4.1.0",
+    "@reduxjs/toolkit": "^1.9.5",
     "@stripe/react-stripe-js": "^2.1.1",
     "@stripe/stripe-js": "^1.54.2",
     "@types/node": "20.4.6",
@@ -25,9 +25,11 @@
     "eslint-config-next": "13.4.12",
     "graphql": "^16.7.1",
     "next": "13.4.12",
+    "next-redux-wrapper": "^8.1.0",
     "postcss": "8.4.27",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.1.2",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
   }
