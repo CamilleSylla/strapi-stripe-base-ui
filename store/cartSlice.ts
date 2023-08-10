@@ -1,8 +1,9 @@
+import { Product } from '@/types/gql'
 import { createSlice } from '@reduxjs/toolkit'
 
 
 export interface CartStore {
-    items : {slug: string, uuid: string}[]
+    items : Array<Product & {slug: string, uuid: string}>
 }
 
 export const initialState : CartStore = {

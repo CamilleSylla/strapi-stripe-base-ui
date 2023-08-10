@@ -1,0 +1,9 @@
+{
+    "nav" : {
+        "cart" : {
+            "title": "Panier",
+            "checkout": "Proceder au paiment",
+            "article_selected": "article(s) sélectionné(s)."
+        }
+    }
+}
