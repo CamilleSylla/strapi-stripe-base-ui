@@ -1,11 +1,12 @@
 import { ReduxStore } from "@/store/store";
 import { Dialog, Transition } from "@headlessui/react";
 import { ShoppingBagIcon, ShoppingCartIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { Fragment, ReactNode, useState } from "react";
-import { useSelector } from "react-redux";
+import { Fragment, ReactNode, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import StrapiImage from "../StrapiImage";
 import { UploadFile } from "@/schema/__strapiGql__/graphql";
 import lang from "../../lang/fr.json"
+import { removeFromCart } from "@/store/cartSlice";
 
 export default function DefaultLayout({ children }: { children: ReactNode }) {
 
@@ -22,6 +23,12 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
 const CartList = () => {
     const products = useSelector((state: ReduxStore) => state.cart.items)
     const [isOpen, setIsOpen] = useState<boolean>(false)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        if (products.length <= 0 ){
+            setIsOpen(false)
+        }
+    }, [products])
 
     return (
         <div>
@@ -57,7 +64,7 @@ const CartList = () => {
                                                 <h2 className=" font-semibold">{product.Name}</h2>
                                                 <h3 className=" text-sm font-semibold text-gray-500">{product.Price}€</h3>
                                             </div>
-                                            <button><TrashIcon className=" w-5 h-5 stroke-red-500" /></button>
+                                            <button onClick={() => dispatch(removeFromCart(product.uuid))}><TrashIcon className=" w-5 h-5 stroke-red-500" /></button>
                                         </div>
                                     )
                                 })}

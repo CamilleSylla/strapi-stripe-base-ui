@@ -16,10 +16,13 @@ export const counterSlice = createSlice({
   reducers: {
     addToCart: (state, actions) => {
       state.items = [...state.items, actions.payload]
+    },
+    removeFromCart: (state, actions) => {
+      state.items = state.items.filter(item => item.uuid !== actions.payload)
     }
   }
 })
 
-export const { addToCart } = counterSlice.actions
+export const { addToCart, removeFromCart } = counterSlice.actions
 
 export default counterSlice.reducer
