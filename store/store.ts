@@ -4,10 +4,11 @@ import { CartStore, counterSlice } from './cartSlice'
 export interface ReduxStore {
     cart : CartStore
 }
-
-export default configureStore({
+export const store = configureStore({
     reducer: {
         cart: counterSlice.reducer
     }, 
     devTools: true
 })
+
+export default store

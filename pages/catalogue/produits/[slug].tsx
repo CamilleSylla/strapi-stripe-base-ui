@@ -28,7 +28,7 @@ const ProductInfos = ({ product }: { product: Product }) => {
             <h1 className=" font-bold text-xl text-gray-700">{product.Name}</h1>
             <span className="block">{(product.Price * 100) / 100}€</span>
             <p>{product.Exerpt}</p>
-            <button onClick={() => dispatch(addToCart({ slug: product.Slug, uuid: generateUUID() }))}>Add to cart</button>
+            <button onClick={() => dispatch(addToCart({ ...product, uuid: generateUUID() }))}>Add to cart</button>
         </div>
     )
 }
