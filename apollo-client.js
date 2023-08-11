@@ -8,4 +8,10 @@ const strapiGqlClient = new ApolloClient({
     cache: new InMemoryCache(),
 });
 
+export const apiGQLClient = new ApolloClient({
+    headers: {},
+    uri: process.env.API_GQL_ENDPOINT || "http://localhost:3333/graphql",
+    cache: new InMemoryCache(),
+})
+
 export default strapiGqlClient;

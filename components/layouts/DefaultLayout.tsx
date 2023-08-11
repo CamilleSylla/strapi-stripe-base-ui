@@ -7,6 +7,7 @@ import StrapiImage from "../StrapiImage";
 import { UploadFile } from "@/schema/__strapiGql__/graphql";
 import lang from "../../lang/fr.json"
 import { removeFromCart } from "@/store/cartSlice";
+import Link from "next/link";
 
 export default function DefaultLayout({ children }: { children: ReactNode }) {
 
@@ -69,12 +70,12 @@ const CartList = () => {
                                     )
                                 })}
                             </div>
-                            <button className="w-full py-4 rounded-lg bg-black font-semibold text-white flex justify-center items-center gap-2">
-                                <span className="block">
+                            <Link href="/panier" className="w-full py-4 rounded-lg bg-black font-semibold text-white flex justify-center items-center gap-2">
+                            <span className="block">
                                     {lang.nav.cart.checkout}
                                 </span>
                                 <ShoppingCartIcon className="w-5 h-5 stroke-white stroke-2" />
-                            </button>
+                            </Link>
                         </Dialog.Panel>
                     </div>
                 </Dialog>

@@ -55,6 +55,8 @@ export default function CheckoutForm() {
     }
 
     setIsLoading(true);
+    // const token = await stripe.createToken(elements)
+    // console.log(token);
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -64,7 +66,7 @@ export default function CheckoutForm() {
       },
     });
 
-    // This point will only be reached if there is an immediate error when
+    // This point will only be eached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then

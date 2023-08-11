@@ -9,6 +9,7 @@ export default function Home() {
     <main
     >
       <Link href="/catalogue">Catalogue</Link>
+      <Link href="/cart/payment">Test</Link>
     </main>
   )
 }
