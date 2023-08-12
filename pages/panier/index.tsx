@@ -1,15 +1,17 @@
 
 import StrapiImage from '@/components/StrapiImage'
 import { CREATE_PAYMENT_INTENT } from '@/mutations/payment'
+import { CreatePaymentIntent, CreatePaymentIntentInputs, MutationCreatePaymentIntentArgs } from '@/schema/__apiGql__/graphql'
 import { UploadFile } from '@/schema/__strapiGql__/graphql'
 import { removeFromCart, updateQuantity } from '@/store/cartSlice'
+import { addClientSecret } from '@/store/paymentSlice'
 import { ReduxStore } from '@/store/store'
-import { Product } from '@/types/gql'
 import { useMutation } from '@apollo/client'
 import { Listbox, Transition } from '@headlessui/react'
 import { QuestionMarkCircleIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import Link from 'next/link'
-import { Fragment, useMemo } from 'react'
+import { useRouter } from 'next/router'
+import { Fragment, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function CartPage() {
@@ -28,23 +30,33 @@ export default function CartPage() {
 }
 
 function Order() {
-  const {order, items} = useSelector((state: ReduxStore) => state.cart)
+  const { order, items } = useSelector((state: ReduxStore) => state.cart)
   const [createPaymentIntent, { data, loading, error }] = useMutation(CREATE_PAYMENT_INTENT);
+  const dispatch = useDispatch()
+  const router = useRouter()
   const handlePaymentIntent = async () => {
     const payload = items.map(item => {
       const product = order.items.find(el => el.uuid === item.uuid)
+
       return {
-        slug : item.Slug,
+        slug: item.Slug,
         quantity: product?.quantity
       }
     })
-      await createPaymentIntent({
-        variables: {
-          products: payload
-        }
-      })
-      console.log(data);
-  } 
+    await createPaymentIntent({
+      variables: {
+        products: payload as CreatePaymentIntentInputs[]
+      }
+    })
+  }
+
+  useEffect(() => {
+    if (data?.createPaymentIntent.client_secret) {
+      dispatch(addClientSecret(data.createPaymentIntent.client_secret));
+      router.push("/panier/paiement")
+    }
+  }, [data])
+
   return (
     <section
       aria-labelledby="summary-heading"
@@ -92,7 +104,7 @@ function Order() {
 
       <div className="mt-6">
         <button
-        onClick={handlePaymentIntent}
+          onClick={handlePaymentIntent}
           className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
         >
           Continuer
@@ -182,31 +194,31 @@ function QuantitySelect({ uuid }: { uuid: string }) {
 
   return (
     <div className='relative w-10 py-2 text-center border border-gray-300 rounded-lg'>
-    <Listbox value={quantity} onChange={value => dispatch(updateQuantity({ uuid, value }))}>
-      <Listbox.Button className="w-full h-full">{quantity}</Listbox.Button>
-      <Transition
-        as={Fragment}
-        leave="transition ease-in duration-100"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <Listbox.Options className="absolute mt-3 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-          {
-            Array.from(Array(9).keys()).map(value => {
-              return (
-                <Listbox.Option
-                  key={value + (value + 1)}
-                  value={value + 1}
-                  className={` hover:bg-gray-300 cursor-pointer ${value+1 === quantity ? 'bg-indigo-600 text-white': ''}`}
-                >
-                  {value + 1}
-                </Listbox.Option>
-              )
-            })
-          }
-        </Listbox.Options>
-      </Transition>
-    </Listbox>
+      <Listbox value={quantity} onChange={value => dispatch(updateQuantity({ uuid, value }))}>
+        <Listbox.Button className="w-full h-full">{quantity}</Listbox.Button>
+        <Transition
+          as={Fragment}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Listbox.Options className="absolute mt-3 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            {
+              Array.from(Array(9).keys()).map(value => {
+                return (
+                  <Listbox.Option
+                    key={value + (value + 1)}
+                    value={value + 1}
+                    className={` hover:bg-gray-300 cursor-pointer ${value + 1 === quantity ? 'bg-indigo-600 text-white' : ''}`}
+                  >
+                    {value + 1}
+                  </Listbox.Option>
+                )
+              })
+            }
+          </Listbox.Options>
+        </Transition>
+      </Listbox>
     </div>
   )
 }

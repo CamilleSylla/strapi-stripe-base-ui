@@ -54,6 +54,15 @@ export const counterSlice = createSlice({
       state.order.items[index].quantity = actions.payload.value;
       state.order.total = calculateTotal(state)
     },
+    clearCartStore : (state) => {
+      state = {
+        items: [],
+        order: {
+          items: [],
+          total: 0
+        }
+      }
+    }
   }
 })
 
@@ -61,6 +70,6 @@ const calculateTotal = (state: CartStore) => {
   return state.order.items.reduce((total, item) => total + item.price * item.quantity, 0)
 }
 
-export const { addToCart, removeFromCart, updateQuantity } = counterSlice.actions
+export const { addToCart, removeFromCart, updateQuantity, clearCartStore } = counterSlice.actions
 
 export default counterSlice.reducer

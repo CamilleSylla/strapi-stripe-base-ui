@@ -55,8 +55,6 @@ export default function CheckoutForm() {
     }
 
     setIsLoading(true);
-    // const token = await stripe.createToken(elements)
-    // console.log(token);
 
     const { error } = await stripe.confirmPayment({
       elements,
