@@ -158,7 +158,7 @@ export default function CheckoutLayout({ children }: { children: ReactNode }) {
 }
 
 const OrderSummary = () => {
-    const { cart, payment } = useSelector((state: ReduxStore) => state)
+    const cart = useSelector((state: ReduxStore) => state.cart)
     return (
         <>
             <section aria-labelledby="summary-heading" className="hidden w-full max-w-md flex-col bg-gray-50 lg:flex">

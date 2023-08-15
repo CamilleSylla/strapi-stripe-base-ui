@@ -17,15 +17,25 @@
     },
     "forms": {
         "checkout": {
+            "titles": {
+                "billing" : "Adresse de livraison",
+                "shipping" : "Adresse de facturation"
+            },
             "label": {
-                "firstname": "Prénom",
-                "lastname": "Nom",
-                "email": "Adresse e-mail",
-                "phone": "Numéro de téléphone"
-            }
+                "firstname": "Prénom *",
+                "lastname": "Nom *",
+                "email": "Adresse e-mail *",
+                "phone": "Numéro de téléphone",
+                "zip" : "Code Postal *",
+                "city" : "Ville *",
+                "country" : "Pays *",
+                "street" : "Adresse *"
+            }, 
+            "informations" : "L'adresse de livraison et de facturation son similaire"
         }
     },
     "validations": {
-        "email" : "Cette email n'est pas valide"
+        "email" : "Cette email n'est pas valide",
+        "required": "Ce champs est obligatoire"
     }
 }

@@ -7,15 +7,15 @@ export interface PaymentStore {
     payment_intent: {
         client_secret: string | null
     };
-    client_informations?: UserInformations;
-    billing_informations?: UserInformations
+    shipping_adress?: UserInformations | null;
+    billing_adress?: UserInformations | null
 }
 
 export const initialState: PaymentStore = {
     payment_intent: {
         client_secret: null
     },
-    client_informations: {
+    shipping_adress: {
         firstname: "",
         lastname: "",
         email: "",
@@ -27,7 +27,7 @@ export const initialState: PaymentStore = {
             zip: ""
         }
     },
-    billing_informations: {
+    billing_adress: {
         firstname: "",
         lastname: "",
         email: "",
@@ -48,17 +48,27 @@ export const paymentSlice = createSlice({
         addClientSecret: (state, actions) => {
             state.payment_intent.client_secret = actions.payload
         },
+        addBillingAdress: (state, actions) => {
+            console.log(actions.payload);
+            
+            state.billing_adress = actions.payload
+        },
+        addShippingAdress: (state, actions) => {
+            state.shipping_adress = actions.payload
+        },
         clearPaymentStore: (state) => {
             state = {
                 payment_intent: {
                     client_secret: null
-                }
+                },
+                shipping_adress: null,
+                billing_adress: null
             }
         }
     }
 })
 
 
-export const { addClientSecret, clearPaymentStore } = paymentSlice.actions
+export const { addClientSecret,addShippingAdress, addBillingAdress, clearPaymentStore } = paymentSlice.actions
 
 export default paymentSlice.reducer
