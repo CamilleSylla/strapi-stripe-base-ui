@@ -5,5 +5,27 @@
             "checkout": "Proceder au paiment",
             "article_selected": "article(s) sélectionné(s)."
         }
+    },
+    "checkout" : {
+        "order": {
+            "title": "Votre panier",
+            "sub_total": "Sous-total",
+            "total" : "Total",
+            "payment": "Proceder au paiment",
+            "continue": "Continuer"
+        }
+    },
+    "forms": {
+        "checkout": {
+            "label": {
+                "firstname": "Prénom",
+                "lastname": "Nom",
+                "email": "Adresse e-mail",
+                "phone": "Numéro de téléphone"
+            }
+        }
+    },
+    "validations": {
+        "email" : "Cette email n'est pas valide"
     }
 }
