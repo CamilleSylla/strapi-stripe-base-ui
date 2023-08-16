@@ -5,6 +5,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 export interface PaymentStore {
     payment_intent: {
+        id: string | null,
         client_secret: string | null
     };
     shipping_adress?: UserInformations | null;
@@ -13,6 +14,7 @@ export interface PaymentStore {
 
 export const initialState: PaymentStore = {
     payment_intent: {
+        id: null,
         client_secret: null
     },
     shipping_adress: {
@@ -46,7 +48,7 @@ export const paymentSlice = createSlice({
     initialState,
     reducers: {
         addClientSecret: (state, actions) => {
-            state.payment_intent.client_secret = actions.payload
+            state.payment_intent = actions.payload
         },
         addBillingAdress: (state, actions) => {
             console.log(actions.payload);
@@ -59,6 +61,7 @@ export const paymentSlice = createSlice({
         clearPaymentStore: (state) => {
             state = {
                 payment_intent: {
+                    id: null,
                     client_secret: null
                 },
                 shipping_adress: null,

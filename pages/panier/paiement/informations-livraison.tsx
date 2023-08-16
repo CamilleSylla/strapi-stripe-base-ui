@@ -5,10 +5,17 @@ import { BillingInformationsSchema } from '@/validation/checkout'
 import FormkikTextInput from '@/components/FormikTextInput'
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
 import { addBillingAdress, addShippingAdress } from '@/store/paymentSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { ReduxStore } from '@/store/store'
+import { useMutation } from '@apollo/client'
+import { UPDATE_PAYMENT_INTENT } from '@/mutations/payment'
+import { useRouter } from 'next/router'
 
-export default function Example() {
+export default function ShippingInformationsPage() {
   const dispatch = useDispatch()
+  const [updatePaymentIntent, { data, loading, error }] = useMutation(UPDATE_PAYMENT_INTENT);
+  const router = useRouter()
+  const {id} = useSelector((state: ReduxStore) => state.payment.payment_intent)
   const [sameAdresses, setSameAdresses] = useState<boolean>(true)
   const initialValues = {
     firstname: "",
@@ -25,21 +32,35 @@ export default function Example() {
   const billingRef = useRef<FormikProps<typeof initialValues> | undefined>();
   const shippingRef = useRef<FormikProps<typeof initialValues> | undefined>();
 
-  const handleBillingSubmit = (values: UserInformations) => {
+  const handleBillingSubmit = async (values: UserInformations) => {
     if (sameAdresses) {
       dispatch(addShippingAdress(values))
       dispatch(addBillingAdress(values))
     } else {
       dispatch(addBillingAdress(values))
     }
+    try {
+      await updatePaymentIntent({
+        variables: {
+          infos: {
+            ...values.adress,  
+            name: values.firstname + " " + values.lastname,
+            ...(values?.phone && {phone: values.phone})
+          },
+          client_secret : id
+        }
+      })
+    } catch (error) {
+      console.error(error)
+    }
+    router.push("/panier/paiement/informations-carte")
   }
 
   const handleShippingSubmit = (values: UserInformations) => {
     addShippingAdress(values)
-
   }
 
-  const submitForms = () => {
+  const submitForms = async () => {
     if (sameAdresses) {
       billingRef.current?.handleSubmit()
     } else {

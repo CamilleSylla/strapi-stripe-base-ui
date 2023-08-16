@@ -52,7 +52,7 @@ function Order() {
 
   useEffect(() => {
     if (data?.createPaymentIntent.client_secret) {
-      dispatch(addClientSecret(data.createPaymentIntent.client_secret));
+      dispatch(addClientSecret(data.createPaymentIntent));
       router.push("/panier/paiement/informations-livraison")
     }
   }, [data])
